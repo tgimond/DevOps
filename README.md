@@ -92,3 +92,6 @@ docker-compose down -v # Stop and delete all containers, images and volumes invo
 
 # Question 1-4 Document your docker-compose file.
 # See in the docker-compose.yml
+
+# Question 2-1 What are testcontainers?
+The testcontainers provide the needed tools to test the created containers regarding their dependencies. 
