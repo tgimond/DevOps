@@ -5,11 +5,14 @@ on:
     branches: 
       - master
       - develop
-  pull_request:
-    branches:
-      - master
+  workflow_run:
+    workflows: ["CI devops 2024"]
+    types:
+      - completed
+    # Will run when the CI devops 2024 will be finished
 jobs:
-  test-backend: 
+  test-backend:
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop' #Can be either on master or develop branch
     runs-on: ubuntu-22.04
     steps:
       # Checkout the code from the current branch
@@ -30,6 +33,7 @@ jobs:
 
   build-and-push-docker-image:
     # This job depends on the 'test-backend' job
+    if: github.ref == 'refs/heads/master' && github.event.workflow_run.conclusion == 'success' # Will only run if the previous job is successful and the branch is master
     needs: test-backend
     runs-on: ubuntu-22.04
     steps:
