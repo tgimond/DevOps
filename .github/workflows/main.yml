@@ -22,10 +22,7 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      # Change to the directory containing the pom.xml file
-      - name: Change to Maven project directory
-        run: cd API/simple-api-student-main
-
      #finally build your app with the latest command
       - name: Build and test with Maven
         run: mvn clean verify
+        working-directory: API/simple-api-student-main
