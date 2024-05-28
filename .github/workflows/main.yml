@@ -63,6 +63,6 @@ jobs:
       - name: Build image and push httpd
         uses: docker/build-push-action@v3
         with:
-          context: ./http
+          context: ./HTTP
           push: true
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
