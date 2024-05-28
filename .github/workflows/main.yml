@@ -3,12 +3,11 @@ on:
   #to begin you want to launch this job in main and develop
   push:
     branches: 
-      - main
-      - develop 
+      - master 
+      - develop
   pull_request:
     branches:
-      - main
-      - develop
+      - master
 jobs:
   test-backend: 
     runs-on: ubuntu-22.04
