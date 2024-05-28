@@ -47,8 +47,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./API/simple-api-student-main
-          push: true
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       # Build and push the database Docker image
       - name: Build image and push database
@@ -56,13 +56,13 @@ jobs:
         with:
           context: ./
           file: Dockerfile_postgres
-          push: true
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       # Build and push the httpd Docker image
       - name: Build image and push httpd
         uses: docker/build-push-action@v3
         with:
           context: ./HTTP
-          push: true
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
