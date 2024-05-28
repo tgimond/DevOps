@@ -24,7 +24,7 @@ jobs:
 
       # Build and test the project with Maven and run with SonarCloud analysis
       - name: Build and test with Maven
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=devops-tgimond_tp2 -Dsonar.organization=devops-tgimond -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./API/simple-api-student-main/pom.xml
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=devops-tgimond_tp2 -Dsonar.organization=devops-tgimond -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file pom.xml
         # run: mvn clean verify
         working-directory: API/simple-api-student-main
 
