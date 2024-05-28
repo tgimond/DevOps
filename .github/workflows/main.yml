@@ -55,6 +55,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./
+          dockerfile: Dockerfile_postgres
           push: true
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
 
