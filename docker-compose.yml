@@ -1,0 +1,47 @@
+version: '3.7' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  # Backend Service: my-spring-boot with container name, build linked to the good dockerfile.
+  backend:
+    container_name: my-spring-boot
+    image: tgimond/myapp:1.0
+    build:
+      context: ./API/simple-api-student-main/
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    depends_on:
+      - database
+  # Database Service: my-postgresdb with container name, build linked to the good dockerfile.
+  database:
+    container_name: my-postgresndb
+    image: tgimond/devops-database:1.0
+    build:
+      context: ./
+      dockerfile: Dockerfile_postgres
+    # Define the volume to persist the data
+    volumes:
+      - my-postgres-volume:/var/lib/postgresql/data
+    networks:
+      - app-network
+  # Frontend Service: my-http-container with container name, build linked to the good dockerfile and the port to connect to.
+  httpd:
+    container_name: my-http-container
+    image: tgimond/my-http:1.0
+    build:
+      context: ./HTTP/
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+
+
+volumes:
+  my-postgres-volume:
