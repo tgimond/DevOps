@@ -28,7 +28,7 @@ jobs:
 
   build-and-push-docker-image:
     # This job depends on the 'test-backend' job
-    if: github.ref == 'refs/heads/master' && github.event.workflow_run.conclusion == 'success' # Will only run if the previous job is successful and the branch is master
+    if: github.ref == 'refs/heads/master' # Will only run if the previous job is successful and the branch is master
     needs: test-backend
     runs-on: ubuntu-22.04
     steps:
