@@ -5,11 +5,6 @@ on:
     branches: 
       - master
       - develop
-  workflow_run:
-    workflows: ["CI devops 2024"]
-    types:
-      - completed
-    # Will run when the CI devops 2024 will be finished
 jobs:
   test-backend:
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop' #Can be either on master or develop branch
