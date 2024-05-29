@@ -1,0 +1,13 @@
+---
+# tasks file for roles/database
+- name: Run database
+  docker_container:
+    name: my-postgresdb
+    image: tgimond/tp-devops-database
+    env:
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+    networks:
+      - name: my_network
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

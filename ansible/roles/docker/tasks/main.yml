@@ -1,0 +1,51 @@
+---
+# tasks file for roles/docker
+
+# This playbook installs Docker and Python 3, then logs in to Docker Hub
+- name: Install device-mapper-persistent-data
+  # Installs the device-mapper-persistent-data package
+  yum:
+    name: device-mapper-persistent-data
+    state: latest
+# Installs the lvm2 package
+- name: Install lvm2
+  yum:
+    name: lvm2
+    state: latest
+
+# Adds the Docker repository
+- name: add repo docker
+  # Adds the Docker repository
+  command:
+    cmd: sudo yum-config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+
+- name: Install Docker
+  yum:
+    name: docker-ce
+    state: present
+
+- name: Install python3
+  yum:
+    name: python3
+    state: present
+
+- name: Install docker with Python 3
+  # Installs the docker package with Python 3
+  pip:
+    name: docker
+    executable: /usr/bin/pip3
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+# Check the Docker service
+- name: Make sure Docker is running
+  service: name=docker state=started
+  tags: docker
+
+- name: Log in to Docker Hub
+  docker_login:
+    username: tgimond
+    password: dckr_pat_jRGAJvH_z-kpgZsfRZ5Mu9AfdwE
+    reauthorize: yes
+  vars:
+      ansible_python_interpreter: /usr/bin/python3

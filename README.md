@@ -95,3 +95,14 @@ docker-compose down -v # Stop and delete all containers, images and volumes invo
 
 # Question 2-1 What are testcontainers?
 The testcontainers provide the needed tools to test the created containers regarding their dependencies. 
+
+# Question 3-1 
+
+# Important commands: 
+chmod 400 /mnt/wsl/id_rsa #set the good rights to id_rsa
+ansible -i ansible/inventories/setup.yml  all -m ping #Test the connectivity of the host in the inventory
+ansible all -i inventories/setup.yml -m setup -a "filter=ansible_distribution*" #setup the module with patterns that match ansible_distribution
+ansible all -i inventories/setup.yml -m yum -a "name=httpd state=absent" --become #Ensure that apache httpd server is not installed. 
+
+
+

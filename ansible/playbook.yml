@@ -1,0 +1,16 @@
+# playbook.yml
+
+# This playbook is applied to all hosts
+- hosts: all
+  # Disables fact gathering to optimize performance
+  gather_facts: false
+  # Enables privilege escalation
+  become: true
+
+  # Includes the 'docker' role
+  roles:
+    - docker
+    - create-network
+    - app
+    - database
+    - proxy
