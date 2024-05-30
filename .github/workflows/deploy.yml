@@ -11,12 +11,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.5.0
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_TOKEN }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa your-server-hostname >> ~/.ssh/known_hosts
+
       - name: Deploy with Ansible
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: ansible/playbook.yml
           inventory: ansible/inventories/hosts
-          extra-vars: '{"ansible_python_interpreter":"/usr/bin/python3"}'
-          become: true
-          become-user: root
-          become-method: sudo
