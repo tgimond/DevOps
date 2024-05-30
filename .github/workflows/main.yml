@@ -66,3 +66,23 @@ jobs:
           context: ./HTTP
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
           push: ${{ github.ref == 'refs/heads/main' }}
+
+  deploy:
+    # This job depends on the 'build-and-push-docker-image' job
+    if: github.ref == 'refs/heads/master' # Will only run if the previous job is successful and the branch is master
+    needs: build-and-push-docker-image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
+
+      # Deploy the application with Ansible
+      - name: Deploy with Ansible
+        uses: appleboy/ansible-action@v2
+        with:
+          playbook: ansible/playbook.yml
+          inventory: ansible/hosts
+          extra-vars: '{"ansible_python_interpreter":"/usr/bin/python3"}'
+          become: true
+          become-user: root
+          become-method: sudo
