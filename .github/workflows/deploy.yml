@@ -15,7 +15,7 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: ansible/playbook.yml
-          inventory: ansible/inventories/setup.yml
+          inventory: ansible/inventories/hosts
           extra-vars: '{"ansible_python_interpreter":"/usr/bin/python3"}'
           become: true
           become-user: root
