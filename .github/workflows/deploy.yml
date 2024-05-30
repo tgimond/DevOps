@@ -1,27 +1,32 @@
-name: Deploy
+name: Run Ansible Playbook
+
 on:
   workflow_run:
-    workflows: ["CI devops 2024"]
+    workflows: ["CI DevOps 2024"]
     types:
       - completed
+    branches:
+      - main
+
 jobs:
-  deploy:
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-22.04
+  run-ansible-playbook:
+    runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2.5.0
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_TOKEN }}" > ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa theo.gimond.takima.cloud >> ~/.ssh/known_hosts
+    - name: SSH
+      uses: webfactory/ssh-agent@v0.5.3  # Use the webfactory/ssh-agent action to set up SSH
+      with:
+        ssh-private-key: ${{ secrets.SSH_TOKEN }} 
+        
+    - name: Add SSH known hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H theo.gimond.takima.cloud >> ~/.ssh/known_hosts
 
-      - name: Deploy with Ansible
-        uses: dawidd6/action-ansible-playbook@v2
-        with:
-          playbook: ansible/playbook.yml
-          inventory: ansible/inventories/hosts
-          options: --user centos
+    - name: Set up Ansible
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ansible
