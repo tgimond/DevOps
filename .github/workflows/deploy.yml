@@ -30,3 +30,11 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y ansible
+
+    - name: Disable host key checking
+      run: |
+        echo "ANSIBLE_HOST_KEY_CHECKING=False" >> $GITHUB_ENV
+
+    - name: Run Ansible playbook
+      run: |
+        ansible-playbook -i ansible/inventories/setup.yml playbooks/deploy.yml
