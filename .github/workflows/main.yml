@@ -78,7 +78,7 @@ jobs:
 
       # Deploy the application with Ansible
       - name: Deploy with Ansible
-        uses: appleboy/ansible-action@v2
+        uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: ansible/playbook.yml
           inventory: ansible/hosts
